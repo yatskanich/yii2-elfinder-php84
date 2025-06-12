@@ -18,10 +18,10 @@
         "psr-4": {"mihaildev\\elfinder\\": ""}
     },
     "require": {
-        "php": ">=8.4",
-        "yiisoft/yii2": "~2.0.51",
-        "yiisoft/yii2-jui": "*",
-        "studio-42/elfinder": "^2.1.10"
+        "php": ">=8.4"
+    },
+    "require-dev": {
+        "rector/rector": ">=2.0.18"
     },
     "extra": {
       "asset-installer-paths": {

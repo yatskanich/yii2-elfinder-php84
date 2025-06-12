@@ -2,8 +2,8 @@
 /**
  * @var \yii\web\View $this
  * @var array $options
-
  */
+
 use mihaildev\elfinder\Assets;
 use yii\helpers\Json;
 
@@ -11,14 +11,16 @@ use yii\helpers\Json;
 Assets::register($this);
 Assets::addLangFile($options['lang'], $this);
 
-if(!empty($options['noConflict']))
-	Assets::noConflict($this);
+if (!empty($options['noConflict'])) {
+    Assets::noConflict($this);
+}
 
 unset($options['noConflict']);
 $options['soundPath'] = Assets::getSoundPathUrl();
 
 
-$this->registerJs("
+$this->registerJs(
+    "
 function ElFinderGetCommands(disabled){
     var Commands = elFinder.prototype._options.commands;
     if (jQuery.inArray('*', Commands) === 0) {
@@ -49,15 +51,17 @@ function ElFinderGetCommands(disabled){
         el.resize(width, height);
     }
 
-    jQuery('#elfinder').elfinder(".Json::encode($options).").elfinder('instance');
+    jQuery('#elfinder').elfinder(" . Json::encode($options) . ").elfinder('instance');
 
     jQuery(window).resize(elFinderFullScreen);
 
     elFinderFullScreen();
-    "/*, \yii\web\View::POS_LOAD*/);
+    "/*, \yii\web\View::POS_LOAD*/
+);
 
 
-$this->registerCss("
+$this->registerCss(
+    "
 html, body {
     height: 100%;
     -moz-box-sizing: border-box;
@@ -66,24 +70,28 @@ html, body {
     position: relative;
     padding: 0; margin: 0;
 }
-");
-
-
+"
+);
 
 
 ?>
-<?php $this->beginPage() ?>
+<?php
+$this->beginPage() ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>elFinder 2.0</title>
-    <?php $this->head() ?>
+    <?php
+    $this->head() ?>
 </head>
 <body>
-<?php $this->beginBody() ?>
+<?php
+$this->beginBody() ?>
 <div id="elfinder"></div>
-<?php $this->endBody() ?>
+<?php
+$this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage() ?>
+<?php
+$this->endPage() ?>

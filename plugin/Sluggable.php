@@ -28,12 +28,14 @@ class Sluggable extends PluginInterface
         return 'Sluggable';
     }
 
-    public function createSlug(&$path, &$name, $src, $elfinder, $volume){
-        if(!$this->isEnable($volume))
+    public function createSlug(&$path, &$name, $src, $elfinder, $volume)
+    {
+        if (!$this->isEnable($volume)) {
             return false;
+        }
 
-        $ext = pathinfo($name, PATHINFO_EXTENSION);
-        $filename = pathinfo($name, PATHINFO_FILENAME);
+        $ext = pathinfo((string)$name, PATHINFO_EXTENSION);
+        $filename = pathinfo((string)$name, PATHINFO_FILENAME);
 
         $lowercase = $this->getOption('lowercase', $volume);
 
@@ -41,8 +43,9 @@ class Sluggable extends PluginInterface
 
         $filename = Inflector::slug($filename, $replacement, $lowercase);
 
-        if($lowercase)
+        if ($lowercase) {
             $ext = strtolower($ext);
+        }
 
         $name = empty($ext) ? $filename : $filename . "." . $ext;
 

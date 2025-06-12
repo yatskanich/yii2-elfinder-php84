@@ -20,93 +20,91 @@ class Base extends BaseObject
     /**
      * @var string
      */
-	public $driver = 'LocalFileSystem';
+    public string $driver = 'LocalFileSystem';
+
+    public string|array $name = 'Root';
+
+    /**
+     * @var array
+     */
+    public array $options = [];
+
+    /**
+     * @var array
+     */
+    public array $access = ['read' => '*', 'write' => '*'];
 
     /**
      * @var string
      */
-	public $name = 'Root';
+    public string $tmbPath;
 
     /**
      * @var array
      */
-	public $options = [];
+    public array $plugin = [];
 
     /**
      * @var array
      */
-	public $access = ['read' => '*', 'write' => '*'];
-
-    /**
-     * @var string
-     */
-	public $tmbPath;
-
-    /**
-     * @var array
-     */
-	public $plugin = [];
-
-    /**
-     * @var array
-     */
-	private $_defaults;
+    private array $_defaults;
 
     /**
      * @return string
      */
-	public function getAlias()
+    public function getAlias()
     {
-		if (is_array($this->name)) {
-			return Yii::t($this->name['category'], $this->name['message']);
-		}
+        if (is_array($this->name)) {
+            return Yii::t($this->name['category'], $this->name['message']);
+        }
 
-		return $this->name;
-	}
+        return $this->name;
+    }
 
     /**
      * @return bool
      */
-	public function isAvailable()
+    public function isAvailable(): bool
     {
-		return $this->defaults['read'];
-	}
+        return $this->defaults['read'];
+    }
 
     /**
      * @return array
      */
-	public function getDefaults()
+    public function getDefaults(): array
     {
-		if ($this->_defaults !== null)
-			return $this->_defaults;
+        if ($this->_defaults !== null) {
+            return $this->_defaults;
+        }
 
-		$this->_defaults['read'] = false;
-		$this->_defaults['write'] = false;
+        $this->_defaults['read'] = false;
+        $this->_defaults['write'] = false;
 
-		if (isset($this->access['write'])) {
-			$this->_defaults['write'] = true;
-			if ($this->access['write'] != '*') {
-				$this->_defaults['write'] = Yii::$app->user->can($this->access['write']);
-			}
-		}
+        if (isset($this->access['write'])) {
+            $this->_defaults['write'] = true;
+            if ($this->access['write'] != '*') {
+                $this->_defaults['write'] = Yii::$app->user->can($this->access['write']);
+            }
+        }
 
-		if ($this->_defaults['write']) {
-			$this->_defaults['read'] = true;
-		} elseif (isset($this->access['read'])) {
-			$this->_defaults['read'] = true;
-			if ($this->access['read'] != '*') {
-				$this->_defaults['read'] = Yii::$app->user->can($this->access['read']);
-			}
-		}
+        if ($this->_defaults['write']) {
+            $this->_defaults['read'] = true;
+        } elseif (isset($this->access['read'])) {
+            $this->_defaults['read'] = true;
+            if ($this->access['read'] != '*') {
+                $this->_defaults['read'] = Yii::$app->user->can($this->access['read']);
+            }
+        }
 
-		return $this->_defaults;
-	}
+        return $this->_defaults;
+    }
 
     /**
      * @param array $options
      * @return array
      */
-    protected function optionsModifier($options)
+    protected function optionsModifier(array $options): array
     {
         return $options;
     }
@@ -114,39 +112,41 @@ class Base extends BaseObject
     /**
      * @return array
      */
-	public function getRoot()
+    public function getRoot(): array
     {
-		$options['driver'] = $this->driver;
-		$options['plugin'] = $this->plugin;
-		$options['defaults'] = $this->getDefaults();
-		$options['alias'] = $this->getAlias();
+        $options['driver'] = $this->driver;
+        $options['plugin'] = $this->plugin;
+        $options['defaults'] = $this->getDefaults();
+        $options['alias'] = $this->getAlias();
 
-		$options['tmpPath'] = Yii::getAlias('@runtime/elFinderTmpPath');
-		if (!empty($this->tmbPath)) {
-			$this->tmbPath = trim($this->tmbPath, '/');
-			$options['tmbPath'] = Yii::getAlias('@webroot/' . $this->tmbPath);
-			$options['tmbURL'] = Yii::$app->request->hostInfo . Yii::getAlias('@web/'.$this->tmbPath);
-		}else{
-			$subPath = md5($this->className() . '|' . serialize($this->name));
-			$options['tmbPath'] = Yii::$app->assetManager->getPublishedPath(__DIR__) . DIRECTORY_SEPARATOR . $subPath;
-			$options['tmbURL'] = Yii::$app->request->hostInfo . Yii::$app->assetManager->getPublishedUrl(__DIR__) . '/' . $subPath;
-		}
+        $options['tmpPath'] = Yii::getAlias('@runtime/elFinderTmpPath');
+        if (!empty($this->tmbPath)) {
+            $this->tmbPath = trim($this->tmbPath, '/');
+            $options['tmbPath'] = Yii::getAlias('@webroot/' . $this->tmbPath);
+            $options['tmbURL'] = Yii::$app->request->hostInfo . Yii::getAlias('@web/' . $this->tmbPath);
+        } else {
+            $subPath = md5($this->className() . '|' . serialize($this->name));
+            $options['tmbPath'] = Yii::$app->assetManager->getPublishedPath(__DIR__) . DIRECTORY_SEPARATOR . $subPath;
+            $options['tmbURL'] = Yii::$app->request->hostInfo . Yii::$app->assetManager->getPublishedUrl(
+                    __DIR__
+                ) . '/' . $subPath;
+        }
 
-		FileHelper::createDirectory($options['tmbPath']);
+        FileHelper::createDirectory($options['tmbPath']);
 
 
-		$options['mimeDetect'] = 'internal';
-		$options['imgLib'] = 'auto';
-		$options['attributes'][] = [
-			'pattern' => '#.*(\.tmb|\.quarantine)$#i',
-			'read' => false,
-			'write' => false,
-			'hidden' => true,
-			'locked' => false,
-		];
+        $options['mimeDetect'] = 'internal';
+        $options['imgLib'] = 'auto';
+        $options['attributes'][] = [
+            'pattern' => '#.*(\.tmb|\.quarantine)$#i',
+            'read' => false,
+            'write' => false,
+            'hidden' => true,
+            'locked' => false,
+        ];
 
         $options = $this->optionsModifier($options);
 
-		return ArrayHelper::merge($options, $this->options);
-	}
+        return ArrayHelper::merge($options, $this->options);
+    }
 }

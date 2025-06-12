@@ -13,9 +13,9 @@
 
 namespace mihaildev\elfinder;
 use mihaildev\elfinder\volume\Local;
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use Yii;
 
 /**
  * Class PathController
@@ -29,7 +29,8 @@ class PathController extends BaseController{
 
 	private $_options;
 
-	public function getOptions()
+    #[\Override]
+    public function getOptions()
 	{
 		if($this->_options !== null)
 			return $this->_options;
@@ -50,12 +51,12 @@ class PathController extends BaseController{
 			$root['path'] = '';
 
 		if(!empty($subPath)){
-			if(preg_match("/\./i", $subPath)){
+            if (preg_match("/\./i", (string)$subPath)) {
 				$root['path'] = rtrim($root['path'], '/');
 			}
 			else{
 				$root['path'] = rtrim($root['path'], '/');
-				$root['path'] .= '/' . trim($subPath, '/');
+                $root['path'] .= '/' . trim((string)$subPath, '/');
 			}
 		}
 
@@ -85,7 +86,9 @@ class PathController extends BaseController{
 		return $this->_options;
 	}
 
-	public function getManagerOptions(){
+    #[\Override]
+    public function getManagerOptions()
+    {
 		$options = parent::getManagerOptions();
 		$options['url'] = Url::toRoute(['connect', 'path' => Yii::$app->request->getQueryParam('path', '')]);
 		return $options;

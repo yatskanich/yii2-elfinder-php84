@@ -40,16 +40,16 @@ class ElFinder extends BaseWidjet{
 			$path = str_replace('/', DIRECTORY_SEPARATOR, $path);
 		}
 
-		if(preg_match('/^@(\d+)/', $path, $match)){
+        if (preg_match('/^@(\d+)/', (string)$path, $match)) {
 			$volume = $match[1];
-			$path = ltrim(substr($path, strlen($match[0])), DIRECTORY_SEPARATOR);
+            $path = ltrim(substr((string)$path, strlen($match[0])), DIRECTORY_SEPARATOR);
 			if(empty($path)){
 				$path = DIRECTORY_SEPARATOR;
 			}
 		}else{
 			$volume = 1;
 		}
-		$hash = rtrim(strtr(base64_encode($path), '+/=', '-_.'), '.');
+        $hash = rtrim(strtr(base64_encode((string)$path), '+/=', '-_.'), '.');
 		return 'elf_fls' . $volume .'_' . $hash;
 	}
 
@@ -105,8 +105,8 @@ class ElFinder extends BaseWidjet{
 
 		if($this->multiple)
 			$managerOptions['multiple'] = $this->multiple;
-			
-		$this->frameOptions['src'] = $this->getManagerUrl($this->controller, $managerOptions);
+
+        $this->frameOptions['src'] = static::getManagerUrl($this->controller, $managerOptions);
 
 		if(!isset($this->frameOptions['style'])){
 			$this->frameOptions['style'] = "width: 100%; height: 100%; border: 0;";
@@ -115,11 +115,39 @@ class ElFinder extends BaseWidjet{
 
 	static function getSupportedLanguage($language)
 	{
-		$supportedLanguages = array('bg', 'jp', 'sk', 'cs', 'ko', 'th', 'de', 'lv', 'tr', 'el', 'nl', 'uk', 'he',
-			'es', 'no', 'vi', 'fr', 'pl', 'zh_CN', 'hr', 'pt_BR', 'zh_TW', 'hu', 'ro', 'it', 'ru', 'en', 'id');
+        $supportedLanguages = [
+            'bg',
+            'jp',
+            'sk',
+            'cs',
+            'ko',
+            'th',
+            'de',
+            'lv',
+            'tr',
+            'el',
+            'nl',
+            'uk',
+            'he',
+            'es',
+            'no',
+            'vi',
+            'fr',
+            'pl',
+            'zh_CN',
+            'hr',
+            'pt_BR',
+            'zh_TW',
+            'hu',
+            'ro',
+            'it',
+            'ru',
+            'en',
+            'id'
+        ];
 
 		if(!in_array($language, $supportedLanguages)){
-			if (strpos($language, '-')){
+            if (strpos((string)$language, '-')) {
 				$language = str_replace('-', '_', $language);
 				if(!in_array($language, $supportedLanguages)) {
 					$language = substr($language, 0, strpos($language, '_'));

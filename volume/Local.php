@@ -8,31 +8,36 @@ namespace mihaildev\elfinder\volume;
 
 use Yii;
 
-class Local extends Base{
-	public $path;
+class Local extends Base
+{
+    public $path;
 
-	public $baseUrl = '@web';
+    public string $baseUrl = '@web';
 
-	public $basePath = '@webroot';
+    public string $basePath = '@webroot';
 
-	public function getUrl(){
-		return Yii::getAlias($this->baseUrl.'/'.trim($this->path,'/'));
-	}
+    public function getUrl(): string
+    {
+        return Yii::getAlias($this->baseUrl . '/' . trim((string)$this->path, '/'));
+    }
 
-	public function getRealPath(){
-		$path = Yii::getAlias($this->basePath.'/'.trim($this->path,'/'));
+    public function getRealPath(): string
+    {
+        $path = Yii::getAlias($this->basePath . '/' . trim((string)$this->path, '/'));
 
-		if(!is_dir($path))
-			mkdir($path, 0777, true);
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
 
-		return $path;
-	}
+        return $path;
+    }
 
-	protected function optionsModifier($options){
+    #[\Override]
+    protected function optionsModifier(array $options): array
+    {
+        $options['path'] = $this->getRealPath();
+        $options['URL'] = $this->getUrl();
 
-		$options['path'] = $this->getRealPath();
-		$options['URL'] = $this->getUrl();
-
-		return $options;
-	}
+        return $options;
+    }
 } 

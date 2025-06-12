@@ -11,7 +11,6 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 
-
 /**
  * Class Controller
  * @package mihaildev\elfinder
@@ -26,7 +25,8 @@ class Controller extends BaseController{
 
 	private $_options;
 
-	public function getOptions()
+    #[\Override]
+    public function getOptions()
 	{
 		if($this->_options !== null)
 			return $this->_options;
