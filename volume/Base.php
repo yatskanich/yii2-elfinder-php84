@@ -44,10 +44,7 @@ class Base extends BaseObject
      */
     public array $plugin = [];
 
-    /**
-     * @var array
-     */
-    private array $_defaults = [];
+    private ?array $_defaults = null;
 
     /**
      * @return string
@@ -66,7 +63,7 @@ class Base extends BaseObject
      */
     public function isAvailable(): bool
     {
-        return $this->defaults['read'];
+        return $this->defaults['read'] ?? false;
     }
 
     /**
@@ -88,7 +85,7 @@ class Base extends BaseObject
             }
         }
 
-        if ($this->_defaults['write']) {
+        if (($this->_defaults['write'] ?? false)) {
             $this->_defaults['read'] = true;
         } elseif (isset($this->access['read'])) {
             $this->_defaults['read'] = true;
