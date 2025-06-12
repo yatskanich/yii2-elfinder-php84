@@ -25,7 +25,7 @@
   },
   "require": {
     "php": ">=8.4",
-    "yatskanich/studio-42-elfinder-php84": "v0.0.1"
+    "yatskanich/studio-42-elfinder-php84": "v0.0.2"
   },
   "require-dev": {
     "rector/rector": ">=2.0.18"
