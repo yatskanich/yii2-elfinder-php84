@@ -7,7 +7,7 @@ use yii\web\JqueryAsset;
 
 class Assets extends AssetBundle
 {
-    public $sourcePath = '@vendor/studio-42/elfinder';
+    public $sourcePath = '@vendor/yatskanich/studio-42-elfinder-php84';
 
     public $publishOptions = [
         'except' => [
@@ -45,7 +45,7 @@ class Assets extends AssetBundle
 
     public static function getPathUrl()
     {
-        return \Yii::$app->assetManager->getPublishedUrl("@vendor/studio-42/elfinder");
+        return \Yii::$app->assetManager->getPublishedUrl("@vendor/yatskanich/studio-42-elfinder-php84");
     }
 
     public static function getSoundPathUrl()
