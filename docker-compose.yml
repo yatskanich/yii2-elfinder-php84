@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: yii2_elfinder_php_cli
-    image: yii2_elfinder_php84
+    image: yii2_elfinder:php84
     working_dir: /app
     volumes:
       - ./:/app

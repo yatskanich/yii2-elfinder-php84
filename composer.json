@@ -25,9 +25,7 @@
   },
   "require": {
     "php": ">=8.4",
-    "yiisoft/yii2": "~2.0.13",
-    "yiisoft/yii2-jui": "*",
-    "studio-42/elfinder": "*"
+    "yatskanich/studio-42-elfinder-php84": "v0.0.1"
   },
   "require-dev": {
     "rector/rector": ">=2.0.18"
