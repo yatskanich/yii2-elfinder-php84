@@ -25,6 +25,8 @@
   },
   "require": {
     "php": ">=8.4",
+    "yiisoft/yii2": "~2.0.13",
+    "yiisoft/yii2-jui": "*",
     "studio-42/elfinder": "*"
   },
   "require-dev": {

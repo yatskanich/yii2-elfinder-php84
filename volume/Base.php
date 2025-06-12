@@ -37,7 +37,7 @@ class Base extends BaseObject
     /**
      * @var string
      */
-    public string $tmbPath;
+    public ?string $tmbPath = null;
 
     /**
      * @var array
@@ -47,7 +47,7 @@ class Base extends BaseObject
     /**
      * @var array
      */
-    private array $_defaults;
+    private array $_defaults = [];
 
     /**
      * @return string
