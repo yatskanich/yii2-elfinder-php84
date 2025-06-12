@@ -1,32 +1,39 @@
 {
-    "name": "yatskanich/mihaildev-yii2-elfinder-php84",
-    "keywords": ["yii", "elfinder", "filemanager"],
-    "description": "Yii2 ElFinder wih php 84 support",
-    "homepage": "https://github.com/MihailDev/yii2-elfinder",
-    "type": "yii2-extension",
-    "license": "BSD-3-Clause",
-    "minimum-stability":"stable",
-    "authors": [
-        {
-            "name": "Mihail",
-            "email": "mihail.kucher@gmail.com",
-            "homepage": "https://github.com/MihailDev",
-            "role": "Developer"
-        }
-    ],
-    "autoload": {
-        "psr-4": {"mihaildev\\elfinder\\": ""}
-    },
-    "require": {
-        "php": ">=8.4"
-    },
-    "require-dev": {
-        "rector/rector": ">=2.0.18"
-    },
-    "extra": {
-      "asset-installer-paths": {
-        "npm-asset-library": "vendor/npm",
-        "bower-asset-library": "vendor/bower"
-      }
+  "name": "yatskanich/mihaildev-yii2-elfinder-php84",
+  "keywords": [
+    "yii",
+    "elfinder",
+    "filemanager"
+  ],
+  "description": "Yii2 ElFinder wih php 84 support",
+  "homepage": "https://github.com/MihailDev/yii2-elfinder",
+  "type": "yii2-extension",
+  "license": "BSD-3-Clause",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "Mihail",
+      "email": "mihail.kucher@gmail.com",
+      "homepage": "https://github.com/MihailDev",
+      "role": "Developer"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "mihaildev\\elfinder\\": ""
+    }
+  },
+  "require": {
+    "php": ">=8.4",
+    "studio-42/elfinder": "*"
+  },
+  "require-dev": {
+    "rector/rector": ">=2.0.18"
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  }
 }
